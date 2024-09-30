@@ -10,36 +10,30 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 class Repo
 {
-    public function __construct(#[ORM\Id]
-    #[ORM\Column(type: 'bigint')]
-    #[ORM\GeneratedValue(strategy: 'NONE')]
-    private readonly int $id, #[ORM\Column(type: 'string')]
-    public string $name, #[ORM\Column(type: 'string')]
-    public string $url)
-    {
+    public function __construct(
+        #[ORM\Id]
+        #[ORM\Column(type: 'bigint')]
+        #[ORM\GeneratedValue(strategy: 'NONE')]
+        private readonly int $id,
+        #[ORM\Column(type: 'string')]
+        public string $name,
+        #[ORM\Column(type: 'string')]
+        public string $url,
+    ) {
     }
 
-    public function id(): int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function name(): string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function url(): string
+    public function getUrl(): string
     {
         return $this->url;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            (int) $data['id'],
-            $data['name'],
-            $data['url']
-        );
     }
 }

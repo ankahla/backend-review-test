@@ -19,7 +19,7 @@ class DbalReadRepoRepository implements ReadRepoRepository
         SQL;
 
         $result = $this->connection->fetchOne($sql, [
-            'id' => $id
+            'id' => $id,
         ]);
 
         return (bool) $result;

@@ -45,7 +45,7 @@ final class GhArchiveEventRepositoryTest extends TestCase
     private function createFakeGzFile(string $filename, array $data): string
     {
         $string = implode("\n", $data);
-        $gz = gzopen($filename,'w9');
+        $gz = gzopen($filename, 'w9');
         gzwrite($gz, $string);
         gzclose($gz);
 

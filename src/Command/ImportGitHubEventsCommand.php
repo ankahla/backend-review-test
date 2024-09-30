@@ -94,7 +94,7 @@ class ImportGitHubEventsCommand extends Command
 
         /** @var GhEvent $ghEvent */
         foreach ($ghEvents as $ghEvent) {
-            if (!\in_array($ghEvent->type, GhEvent::TYPES) || $this->readEventRepository->exist((int)$ghEvent->id)) {
+            if (!\in_array($ghEvent->type, GhEvent::TYPES) || $this->readEventRepository->exist((int) $ghEvent->id)) {
                 continue;
             }
 

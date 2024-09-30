@@ -42,8 +42,8 @@ SQL;
             'actor_id' => $ghEvent->actor->id,
             'repo_id' => $ghEvent->repo->id,
             'type' => $eventType,
-            'count' => $eventType === EventType::COMMIT ? count($ghEvent->payload['commits'] ?? []) : 0,
-            'comment' => $eventType === EventType::COMMENT ? $ghEvent->payload['comment']['url'] : null,
+            'count' => EventType::COMMIT === $eventType ? count($ghEvent->payload['commits'] ?? []) : 0,
+            'comment' => EventType::COMMENT === $eventType ? $ghEvent->payload['comment']['url'] : null,
             'payload' => json_encode($ghEvent->payload),
             'created_at' => $ghEvent->createdAt->format('c'),
         ]);
