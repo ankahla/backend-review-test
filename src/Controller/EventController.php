@@ -5,38 +5,25 @@ namespace App\Controller;
 use App\Dto\EventInput;
 use App\Repository\ReadEventRepository;
 use App\Repository\WriteEventRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class EventController
 {
-    public function __construct(private readonly WriteEventRepository $writeEventRepository, private readonly ReadEventRepository $readEventRepository, private readonly SerializerInterface $serializer)
+    public function __construct(private readonly WriteEventRepository $writeEventRepository, private readonly ReadEventRepository $readEventRepository)
     {
     }
 
     #[Route(path: '/api/event/{id}/update', name: 'api_commit_update', methods: ['PUT'])]
-    public function update(Request $request, int $id, ValidatorInterface $validator): Response
-    {
-        $eventInput = $this->serializer->deserialize($request->getContent(), EventInput::class, 'json');
-
-        $errors = $validator->validate($eventInput);
-
-        if (\count($errors) > 0) {
-            return new JsonResponse(
-                ['message' => $errors->get(0)->getMessage()],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
-
+    public function update(
+        int $id,
+        #[MapRequestPayload(validationFailedStatusCode: Response::HTTP_BAD_REQUEST)]
+        EventInput $eventInput,
+    ): Response {
         if (false === $this->readEventRepository->exist($id)) {
-            return new JsonResponse(
-                ['message' => sprintf('Event identified by %d not found !', $id)],
-                Response::HTTP_NOT_FOUND
-            );
+            throw new NotFoundHttpException(sprintf('Event identified by %d not found !', $id));
         }
 
         try {
