@@ -32,13 +32,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ImportGitHubEventsCommand extends Command
 {
     public function __construct(
-        private ApiEventRepositoryInterface $apiEventRepository,
-        private WriteEventRepository $writeEventRepository,
-        private WriteRepoRepository $writeRepoRepository,
-        private WriteActorRepository $writeActorRepository,
-        private ReadEventRepository $readEventRepository,
-        private ReadRepoRepository $readRepoRepository,
-        private ReadActorRepository $readActorRepository,
+        private readonly ApiEventRepositoryInterface $apiEventRepository,
+        private readonly WriteEventRepository $writeEventRepository,
+        private readonly WriteRepoRepository $writeRepoRepository,
+        private readonly WriteActorRepository $writeActorRepository,
+        private readonly ReadEventRepository $readEventRepository,
+        private readonly ReadRepoRepository $readRepoRepository,
+        private readonly ReadActorRepository $readActorRepository,
     ) {
         parent::__construct();
     }

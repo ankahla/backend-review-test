@@ -7,11 +7,8 @@ use Doctrine\DBAL\Connection;
 
 class DbalReadEventRepository implements ReadEventRepository
 {
-    private Connection $connection;
-
-    public function __construct(Connection $connection)
+    public function __construct(private readonly Connection $connection)
     {
-        $this->connection = $connection;
     }
 
     public function countAll(SearchInput $searchInput): int
@@ -81,7 +78,7 @@ SQL;
         ]);
 
         $result = array_map(static function($item) {
-            $item['repo'] = json_decode($item['repo'], true);
+            $item['repo'] = json_decode((string) $item['repo'], true);
 
             return $item;
         }, $result);

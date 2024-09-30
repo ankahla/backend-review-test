@@ -7,11 +7,8 @@ use Doctrine\DBAL\Connection;
 
 class DbalWriteActorRepository implements WriteActorRepository
 {
-    private Connection $connection;
-
-    public function __construct(Connection $connection)
+    public function __construct(private readonly Connection $connection)
     {
-        $this->connection = $connection;
     }
 
     public function insert(GhActor $ghActor): void

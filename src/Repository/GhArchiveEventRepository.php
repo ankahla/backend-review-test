@@ -11,7 +11,7 @@ class GhArchiveEventRepository implements ApiEventRepositoryInterface
 {
     public function __construct(
         protected SerializerInterface $serializer,
-        private string $ghArchiveHost
+        private readonly string $ghArchiveHost
     ) {
     }
 

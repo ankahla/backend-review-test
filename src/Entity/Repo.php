@@ -6,34 +6,17 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="repo")
- */
+#[ORM\Table(name: 'repo')]
+#[ORM\Entity]
 class Repo
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private int $id;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    public string $name;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    public string $url;
-
-    public function __construct(int $id, string $name, string $url)
+    public function __construct(#[ORM\Id]
+    #[ORM\Column(type: 'bigint')]
+    #[ORM\GeneratedValue(strategy: 'NONE')]
+    private readonly int $id, #[ORM\Column(type: 'string')]
+    public string $name, #[ORM\Column(type: 'string')]
+    public string $url)
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->url = $url;
     }
 
     public function id(): int
