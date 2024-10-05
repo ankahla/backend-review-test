@@ -107,3 +107,9 @@ func-test                      Run PhpUnit functionnal testsuite
 **We encourage you to have fun during this challenge!**
 
 # :muscle: Good luck!
+
+## :bulb: Possible amelioration
+
+* Due to performance issue the command can import a limited number of lines from the archive per call with the option `--limit`. example: `php -d memory_limit=-1 bin/console app:import-github-events 2024-09-29-0 --limit=10000`
+* Not all code is covered by unit test (lake of time)
+
