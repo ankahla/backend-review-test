@@ -3,11 +3,10 @@
 namespace App\Tests\Func;
 
 use App\DataFixtures\EventFixtures;
-use App\Entity\Event;
 use Doctrine\ORM\Tools\SchemaTool;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class EventControllerTest extends WebTestCase
 {
@@ -16,7 +15,7 @@ class EventControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
-        static::$client = static::createClient();
+        self::$client = static::createClient();
 
         $entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
         $metaData = $entityManager->getMetadataFactory()->getAllMetadata();
@@ -32,7 +31,7 @@ class EventControllerTest extends WebTestCase
 
     public function testUpdateShouldReturnEmptyResponse()
     {
-        $client = static::$client;
+        $client = self::$client;
 
         $client->request(
             'PUT',
@@ -46,10 +45,9 @@ class EventControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(204);
     }
 
-
     public function testUpdateShouldReturnHttpNotFoundResponse()
     {
-        $client = static::$client;
+        $client = self::$client;
 
         $client->request(
             'PUT',
@@ -76,7 +74,7 @@ class EventControllerTest extends WebTestCase
      */
     public function testUpdateShouldReturnBadRequest(string $payload, string $expectedResponse)
     {
-        $client = static::$client;
+        $client = self::$client;
 
         $client->request(
             'PUT',
@@ -89,7 +87,6 @@ class EventControllerTest extends WebTestCase
 
         self::assertResponseStatusCodeSame(400);
         self::assertJsonStringEqualsJsonString($expectedResponse, $client->getResponse()->getContent());
-
     }
 
     public function providePayloadViolations(): iterable
@@ -105,7 +102,7 @@ class EventControllerTest extends WebTestCase
                 {
                     "message": "This value is too short. It should have 20 characters or more."
                 }
-            JSON
+            JSON,
         ];
     }
 }

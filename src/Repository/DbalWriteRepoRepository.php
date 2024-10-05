@@ -7,11 +7,8 @@ use Doctrine\DBAL\Connection;
 
 class DbalWriteRepoRepository implements WriteRepoRepository
 {
-    private Connection $connection;
-
-    public function __construct(Connection $connection)
+    public function __construct(private readonly Connection $connection)
     {
-        $this->connection = $connection;
     }
 
     public function insert(GhRepo $ghRepo): void

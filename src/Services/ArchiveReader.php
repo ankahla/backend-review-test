@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GhArchive;
+namespace App\Services;
 
 final class ArchiveReader
 {
@@ -8,7 +8,7 @@ final class ArchiveReader
     {
         $handle = gzopen($filename, 'r');
 
-        while (gzeof($handle) === false) {
+        while (false === gzeof($handle)) {
             yield gzgets($handle);
         }
 

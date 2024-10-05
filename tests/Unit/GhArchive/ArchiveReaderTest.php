@@ -2,7 +2,7 @@
 
 namespace App\Tests\Unit\GhArchive;
 
-use App\GhArchive\ArchiveReader;
+use App\Services\ArchiveReader;
 use PHPUnit\Framework\TestCase;
 
 final class ArchiveReaderTest extends TestCase
@@ -11,7 +11,7 @@ final class ArchiveReaderTest extends TestCase
     {
         $filename = tempnam(sys_get_temp_dir(), 'test');
         $string = "Some information to compress\n2nd line";
-        $gz = gzopen($filename,'w9');
+        $gz = gzopen($filename, 'w9');
         gzwrite($gz, $string);
         gzclose($gz);
 
