@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Dto\GhEvent;
-use App\GhArchive\ArchiveReader;
+use App\Services\ArchiveReader;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 

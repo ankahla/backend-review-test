@@ -32,7 +32,7 @@ class Event
         #[ORM\Column(type: 'datetime_immutable', nullable: false)]
         private readonly \DateTimeImmutable $createAt,
         #[ORM\Column(type: 'text', nullable: true)]
-        private readonly ?string $comment,
+        private ?string $comment,
     ) {
         EventType::assertValidChoice($type);
         $this->type = $type;
@@ -80,5 +80,12 @@ class Event
     public function getComment(): ?string
     {
         return $this->comment;
+    }
+
+    public function setComment(string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
     }
 }

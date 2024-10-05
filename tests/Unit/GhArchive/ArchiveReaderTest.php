@@ -2,7 +2,7 @@
 
 namespace App\Tests\Unit\GhArchive;
 
-use App\GhArchive\ArchiveReader;
+use App\Services\ArchiveReader;
 use PHPUnit\Framework\TestCase;
 
 final class ArchiveReaderTest extends TestCase

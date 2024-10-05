@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GhArchive;
+namespace App\Services;
 
 final class ArchiveReader
 {

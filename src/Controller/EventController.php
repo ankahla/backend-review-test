@@ -3,34 +3,30 @@
 namespace App\Controller;
 
 use App\Dto\EventInput;
-use App\Repository\ReadEventRepository;
-use App\Repository\WriteEventRepository;
+use App\Entity\Event;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Attribute\ValueResolver;
+use Symfony\Component\Routing\Attribute\Route;
 
 class EventController
 {
-    public function __construct(private readonly WriteEventRepository $writeEventRepository, private readonly ReadEventRepository $readEventRepository)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+    ) {
     }
 
     #[Route(path: '/api/event/{id}/update', name: 'api_commit_update', methods: ['PUT'])]
     public function update(
-        int $id,
+        #[ValueResolver('event')]
+        Event $event,
         #[MapRequestPayload(validationFailedStatusCode: Response::HTTP_BAD_REQUEST)]
         EventInput $eventInput,
     ): Response {
-        if (false === $this->readEventRepository->exist($id)) {
-            throw new NotFoundHttpException(sprintf('Event identified by %d not found !', $id));
-        }
-
-        try {
-            $this->writeEventRepository->update($eventInput, $id);
-        } catch (\Exception) {
-            return new Response(null, Response::HTTP_SERVICE_UNAVAILABLE);
-        }
+        $event->setComment($eventInput->comment);
+        $this->entityManager->persist($event);
+        $this->entityManager->flush();
 
         return new Response(null, Response::HTTP_NO_CONTENT);
     }
